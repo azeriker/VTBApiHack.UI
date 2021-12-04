@@ -1,0 +1,81 @@
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+
+.container {
+    max-width: 80rem;
+    width: 80rem;
+}
+
+.subscription-header {
+    font: var(--tui-font-text-l);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.subscription-date {
+    font: var(--tui-font-text-xl);
+    text-align: center;
+}
+
+.subscription-date,
+.subscription-info {
+    color: var(--tui-text-02);
+}
+
+.subscription-month,
+.subscription-status {
+    font: var(--tui-font-text-s);
+}
+
+.subscription-pic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin: 0 1.5rem;
+    background: var(--tui-secondary-active);
+    border-radius: 100%;
+    width: 3rem;
+    height: 3rem;
+    color: var(--tui-text-03);
+}
+
+.subscription-title {
+    .text-overflow();
+    flex-grow: 1;
+    text-align: center;
+}
+
+.subscription-info {
+    text-align: right;
+}
+
+.subscription-status {
+    &_success {
+        color: var(--tui-success-fill);
+    }
+
+    &_error {
+        color: var(--tui-error-fill);
+    }
+}
+
+.form-title {
+    font: var(--tui-font-heading-6);
+    margin: 0 0 1.25rem;
+}
+
+.input {
+    max-width: 28.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.buttons {
+    display: flex;
+}
+.subscriptions_container{
+
+    display: flex;
+    justify-content: center;
+}
