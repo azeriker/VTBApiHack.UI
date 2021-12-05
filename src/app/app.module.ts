@@ -14,6 +14,8 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { HttpService } from "./services/http.service";
 import { HttpClientModule } from "@angular/common/http";
 import { PeriodPipe } from "./helpers/period.pipe";
+import { IsActivePipe } from "./helpers/autorenewal.pipe";
+
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { PeriodPipe } from "./helpers/period.pipe";
     AppComponent,
     SubscriptionsComponent,
     AddSubscriptionDialogComponent,
-    PeriodPipe
+    PeriodPipe,
+    IsActivePipe
   ],
   imports: [
     HttpClientModule,

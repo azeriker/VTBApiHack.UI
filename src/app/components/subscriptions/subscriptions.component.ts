@@ -10,8 +10,7 @@ import { Subscription } from 'src/app/models/subscription';
 @Component({
   selector: 'app-subscriptions',
   templateUrl: './subscriptions.component.html',
-  styleUrls: ['./subscriptions.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./subscriptions.component.less']
 })
 export class SubscriptionsComponent {
 

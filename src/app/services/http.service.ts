@@ -14,7 +14,7 @@ export class HttpService {
   constructor(private http: HttpClient) { }
 
   public getTariffs(): Observable<Tariff[]> {
-    return this.http.get<Tariff[]>(this.apiUrl + "Tariff");
+    return this.http.get<Tariff[]>(this.apiUrl + "Tariff/Get");
   }
   public getSubscriptions(): Observable<Subscription[]> {
     return this.http.get<Subscription[]>(this.apiUrl + "Subscription/Get" );
