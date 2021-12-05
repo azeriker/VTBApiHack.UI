@@ -1,39 +1,52 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Injector } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { TuiDialogService } from '@taiga-ui/core';
+import { AddSubscriptionDialogComponent } from '../add-subscription-dialog/add-subscription-dialog.component';
+import { HttpService } from 'src/app/services/http.service';
+import { Subscription } from 'src/app/models/subscription';
 
 
- 
- 
-class Account {
-    constructor(readonly name: string, readonly balance: number) {}
- 
-    toString(): string {
-        return `${this.name} (${this.balance})`;
-    }
-}
 @Component({
   selector: 'app-subscriptions',
   templateUrl: './subscriptions.component.html',
-  styleUrls: ['./subscriptions.component.less']
+  styleUrls: ['./subscriptions.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SubscriptionsComponent implements OnInit {
+export class SubscriptionsComponent {
 
-  constructor() { }
+  private readonly dialog = this.dialogService.open<number>(
+    new PolymorpheusComponent(AddSubscriptionDialogComponent, this.injector),
+    {
+      data: 237,
+      dismissible: true,
+      label: 'Создать подписку',
+    },
+  );
+  subscriptions: Subscription[];
 
-  ngOnInit(): void {
+  constructor(@Inject(TuiDialogService) private readonly dialogService: TuiDialogService, @Inject(Injector) private readonly injector: Injector, private httpService: HttpService) {
+    this.subscriptions = new Array<Subscription>();
   }
 
-  readonly accounts = [
-    new Account('Rubles', 500),
-    new Account('Dollar', 237),
-    new Account('Euro', 100),
-];
+  ngOnInit(): void {
+    this.httpService.getSubscriptions().subscribe(
+      ((data: Subscription[]) => {
+        this.subscriptions = data;
+      }));
 
-switchAutoRenewal(): void{
-  
+  }
+
+  showDialog() {
+    this.dialog.subscribe({
+      next: data => {
+        console.log('Dialog emitted data = ' + data);
+      },
+      complete: () => {
+        console.log('Dialog closed');
+      },
+    });
+  }
 }
-testForm = new FormGroup({
-    name: new FormControl(''),
-    accounts: new FormControl(this.accounts[0]),
-});
-}
+
+

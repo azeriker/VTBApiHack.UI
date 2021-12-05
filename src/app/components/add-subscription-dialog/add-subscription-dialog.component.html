@@ -1,0 +1,21 @@
+<mat-dialog-content>
+    <form class="form" [formGroup]="createSubscriptionForm">
+        <tui-select formControlName="tariff" itemSize="l" [valueContent]="tariffContent">
+            Выбрать тариф
+            <tui-data-list-wrapper *tuiDataList [items]="tariffs" [itemContent]="tariffContent"></tui-data-list-wrapper>
+        </tui-select>
+
+        <ng-template #tariffContent let-tariff>
+                <div>
+                    {{tariff.name}}
+                </div>
+                <div>
+                    {{tariff.period | period}}
+                </div>
+            <tui-money [value]="tariff.price"></tui-money>
+        </ng-template>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+
+</mat-dialog-actions>
