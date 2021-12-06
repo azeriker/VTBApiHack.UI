@@ -5,7 +5,12 @@ import { Pipe, PipeTransform } from "@angular/core";
 })
 export class PeriodPipe implements PipeTransform {
 
-    transform(period: number): string {
+    transform(period: number | string): string {
+
+        if(typeof period === "string") {
+            return period;
+        }
+        
         switch (period) {
             case 0:
                 return "Месячная";

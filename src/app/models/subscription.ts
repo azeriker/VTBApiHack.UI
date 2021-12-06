@@ -1,25 +1,21 @@
 export class Subscription {
-    id: string;
-    userId: string;
+    id?: string;
+    userId?: string;
     name: string;
-    serviceName: string;
-    nextCharge: Date;
+    serviceName?: string;
+    nextCharge?: Date;
     period: Period;
     price: number;
     policy: Policy;
-    hasActionReleased: boolean;
-    isActive: boolean;
+    hasActionReleased?: boolean;
+    isActive?: boolean;
 
-    constructor(id: string, userId: string, name: string, serviceName: string, nextCharge: Date, period: Period, price: number, policy: Policy, hasActionReleased: boolean, isActive: boolean) {
+    constructor(name: string,  period: Period, price: number, policy: Policy, id?: string, isActive?: boolean) {
         this.id = id;
-        this.userId = userId;
         this.name = name;
-        this.serviceName = serviceName;
-        this.nextCharge = nextCharge;
         this.period = period;
         this.price = price;
         this.policy = policy;
-        this.hasActionReleased = hasActionReleased;
         this.isActive = isActive;
     }
 }

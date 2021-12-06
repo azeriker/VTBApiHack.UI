@@ -1,21 +1,77 @@
 <mat-dialog-content>
     <form class="form" [formGroup]="createSubscriptionForm">
+    <p class="existing_tariff">
         <tui-select formControlName="tariff" itemSize="l" [valueContent]="tariffContent">
-            Выбрать тариф
+            Выбрать существующий тариф
             <tui-data-list-wrapper *tuiDataList [items]="tariffs" [itemContent]="tariffContent"></tui-data-list-wrapper>
         </tui-select>
-
         <ng-template #tariffContent let-tariff>
-                <div>
+            <div class="tariff_container">
+                <div class="tariff_item">
                     {{tariff.name}}
                 </div>
-                <div>
+                <div class="tariff_item">
                     {{tariff.period | period}}
                 </div>
-            <tui-money [value]="tariff.price"></tui-money>
+                <div class="tariff_item price_item">
+                    <tui-money [value]="tariff.price"></tui-money>
+                </div>
+            </div>
         </ng-template>
-    </form>
+    </p>
+
+        <div class="subscription_form">
+
+            <p class="tui-text_body-m new_tariff">Или создайте новый тариф</p>
+            <p>
+                <tui-input formControlName="name" class="b-form">
+                    Введите название
+                </tui-input>
+            <p>
+                <tui-input-number formControlName="price" class="tui-col_l-4" tuiTextfieldSize="l"
+                    [postfix]="'RUB' | tuiCurrency">
+                    Введите стоимость
+                </tui-input-number>
+            </p>
+
+            <p>
+                <tui-select formControlName="period" itemSize="l" [valueContent]="periodContent">
+                    Выбрать существующий тариф
+                    <tui-data-list-wrapper *tuiDataList [items]="periods" [itemContent]="periodContent">
+                    </tui-data-list-wrapper>
+                </tui-select>
+                <ng-template #periodContent let-period>
+
+                    <div>
+                        {{ period | period }}
+                    </div>
+
+                </ng-template>
+            </p>
+            <p>
+                <tui-select formControlName="policy" itemSize="l" [valueContent]="policyContent">
+                    Выбрать политику
+                    <tui-data-list-wrapper *tuiDataList [items]="policies" [itemContent]="policyContent">
+                    </tui-data-list-wrapper>
+                </tui-select>
+                <ng-template #policyContent let-policy>
+
+                    <div>
+                        {{ policy }}
+                    </div>
+
+                </ng-template>
+            </p>
+        </div>
+
+    <div class="button_container">
+        <button tuiButton type="button" appearance="primary" size="l" (click)="createSubscription()">
+            Создать
+        </button>
+    </div>
+</form>
 </mat-dialog-content>
+
 <mat-dialog-actions align="center">
 
 </mat-dialog-actions>

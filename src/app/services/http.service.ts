@@ -19,5 +19,9 @@ export class HttpService {
   public getSubscriptions(): Observable<Subscription[]> {
     return this.http.get<Subscription[]>(this.apiUrl + "Subscription/Get" );
   }
+  public createSubscription(subscription: Subscription): Observable<Subscription> {
+    return this.http.post<Subscription>(this.apiUrl + "Subscription/Create", subscription );
+  }
+
 
 }
