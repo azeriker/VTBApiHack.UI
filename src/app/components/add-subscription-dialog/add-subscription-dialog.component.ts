@@ -1,17 +1,18 @@
-import { Component, Inject, OnInit, TemplateRef } from '@angular/core';
+import { Component, Inject, Injector, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
+import { TuiDialogContext, TuiDialogOptions, TuiDialogService } from '@taiga-ui/core';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { distinctUntilChanged } from 'rxjs';
 import { Period, Policy, Subscription } from 'src/app/models/subscription';
 import { Tariff } from 'src/app/models/tariff';
 import { HttpService } from 'src/app/services/http.service';
 
+
 @Component({
   selector: 'app-add-subscription-dialog',
   templateUrl: './add-subscription-dialog.component.html',
-  styleUrls:['./add-subscription-dialog.component.less']
+  styleUrls: ['./add-subscription-dialog.component.less']
 })
 export class AddSubscriptionDialogComponent implements OnInit {
 
@@ -19,9 +20,12 @@ export class AddSubscriptionDialogComponent implements OnInit {
   periods: Period[];
   policies: Policy[];
   createSubscriptionForm: FormGroup;
+  _data: any
 
+  
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector,
     @Inject(POLYMORPHEUS_CONTEXT)
     private readonly context: TuiDialogContext<boolean>,
     private httpService: HttpService,
@@ -49,7 +53,7 @@ export class AddSubscriptionDialogComponent implements OnInit {
 
     this.initForm();
   }
-  
+
   initForm(): void {
     this.createSubscriptionForm = this.fb.group({
       name: new FormControl("", [Validators.required]),
@@ -58,8 +62,8 @@ export class AddSubscriptionDialogComponent implements OnInit {
       policy: new FormControl(this.policies[0]),
       tariff: new FormControl(this.tariffs[0])
     });
-    
-    let tariff = new FormControl(this.tariffs[0], [Validators.required]); 
+
+    let tariff = new FormControl(this.tariffs[0], [Validators.required]);
 
     this.createSubscriptionForm.get("tariff")?.valueChanges.pipe(distinctUntilChanged()).subscribe(selectedValue => {
       this.updateFormValues(selectedValue);
@@ -75,19 +79,36 @@ export class AddSubscriptionDialogComponent implements OnInit {
       tariff: tariff
     });
   }
-  createSubscription(){
+  
+  createSubscription() {
     const newSubscription = new Subscription(this.createSubscriptionForm.get("name")?.value, this.createSubscriptionForm.get("period")?.value, this.createSubscriptionForm.get("price")?.value, this.createSubscriptionForm.get("policy")?.value);
     this.httpService.createSubscription(newSubscription).subscribe(
       (data: any) => {
-        console.log(data);
+        this.showPreCredentialDialog(data);
       }
     );
     this.context.completeWith(true);
   }
-  showDialog(content: TemplateRef<TuiDialogContext<void>>) {
-    this.dialogService.open(content, { dismissible: true }).subscribe();
+
+    showPreCredentialDialog(credentials: any) {
+      this.dialogService
+        .open('Приготовьтесь к вводу данных карты на целевом сайте', { label: 'Уведомление', size: 's', closeable: false, dismissible: false })
+        .subscribe({complete: () => {
+          this.httpService.getCredentials(credentials.xMdmId, credentials.publicId).subscribe(
+            (data: any) => {
+              data.encryptedPan = (atob(data.encryptedPan));
+              this.dialogService.open("Номер карты:"+  data.encryptedPan + "\n" + "Срок действия:" + data.cardExpiry + "\n" + "Имя владельца:" + data.embossingName, { closeable: false, dismissible: false })
+              .subscribe(
+                  {complete: () => {
+                    this.httpService.getCVV(credentials.xMdmId, credentials.publicId).subscribe(
+                      (data: any) => {
+                        this.dialogService.open("CVV:"+ data.cvv, { label: 'Уведомление', size: 's', closeable: false, dismissible: false } ).subscribe();
+                      }
+                    );
+                  }});
+                
+                }
+              );
+        }});};
+
   }
-
-
-
-}

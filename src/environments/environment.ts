@@ -5,6 +5,7 @@
 export const environment = {
   production: false, 
   apiUrl: "http://46.243.226.204/",
+  credentialsApiUrl: "http://46.243.226.204:90/"
 };
 
 /*

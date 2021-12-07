@@ -1,4 +1,4 @@
-<div class="subscriptions_container">
+<div class="subscriptions_container" >
   <div class="subscriptions_header">
     <h2>Активные подписки</h2>
     <button tuiButton appearance="secondary" size="m" (click)="showDialog()">Добавить подписку</button>
@@ -6,35 +6,32 @@
 
   <table tuiTable [columns]="columns" class="subscriptions_table">
     <thead>
-    <tr tuiThGroup>
-      <th *tuiHead="'name'" tuiTh>Название</th>
-      <th *tuiHead="'date'" tuiTh>Активна до</th>
-      <th *tuiHead="'period'" tuiTh>Длительность</th>
-      <th *tuiHead="'price'" tuiTh>Цена</th>
-      <th *tuiHead="'action'" [sorter]="null" tuiTh></th>
-    </tr>
+      <tr tuiThGroup>
+        <th *tuiHead="'name'" tuiTh>Название</th>
+        <th *tuiHead="'date'" tuiTh>Активна до</th>
+        <th *tuiHead="'period'" tuiTh>Длительность</th>
+        <th *tuiHead="'price'" tuiTh>Цена</th>
+        <th *tuiHead="'status'" tuiTh>Статус</th>
+        <th *tuiHead="'action'" [sorter]="null" tuiTh>Управление</th>
+      </tr>
     </thead>
     <tbody tuiTbody [data]="subscriptions">
-    <tr *tuiRow="let sub of subscriptions; let index = index" tuiTr>
-      <td *tuiCell="'name'" tuiTd>{{sub.name}}</td>
-      <td *tuiCell="'date'" tuiTd>{{sub.nextCharge | date: "dd/MM/yy"}}</td>
-      <td *tuiCell="'period'" tuiTd>{{sub.period | period }}</td>
-      <td *tuiCell="'price'" tuiTd>
-        <div class="subscription-info">
-          <tui-money class="subscription-amount subscription-title" [value]="sub.price"></tui-money>
-          <div class="subscription-status">{{sub.isActive | autorenewal}}</div>
-        </div>
-      </td>
-      <td *tuiCell="'action'" class="actions" tuiTd>
-        <button
-          tuiButton
-          title="Отписаться"
-          class="remove"
-          type="button"
-          appearance="secondary"
-        >Отписаться</button>
-      </td>
-    </tr>
+      <tr *tuiRow="let sub of subscriptions; let index = index" tuiTr>
+        <td *tuiCell="'name'" tuiTd>{{sub.name}}</td>
+        <td *tuiCell="'date'" tuiTd>{{sub.nextCharge | date: "dd/MM/yy"}}</td>
+        <td *tuiCell="'period'" tuiTd>{{sub.period | period }}</td>
+        <td *tuiCell="'price'" tuiTd>
+          <div class="subscription-info">
+            <tui-money class="subscription-amount subscription-title" [value]="sub.price"></tui-money>
+          </div>
+        </td>
+        <td *tuiCell="'status'" tuiTd>
+          <div class="disabled" [class.active]="sub.isActive">{{sub.isActive | autorenewal}}</div>
+        </td>
+        <td *tuiCell="'action'" tuiTd>
+          <button *ngIf="sub.isActive"  tuiButton title="Отписаться" class="remove actions" type="button" appearance="secondary" (click)="disableSubscription(sub.id || '')">Отписаться</button>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>

@@ -26,14 +26,13 @@ th {
   white-space: nowrap;
   border-color: transparent;
   text-align: center;
-  border-right-color: var(--tui-base-04);
   &:last-child {
     border: none;
   }
 }
 
 th {
-  border-bottom: 1px solid rgba(82, 110, 211, 0.8) !important;
+  height: 110px;
 }
 
 tr {
@@ -75,4 +74,24 @@ tbody {
   tr:focus-within & {
     opacity: 1;
   }
+}
+	
+.active,
+.disabled {
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+ 
+    &:before {
+        content: '';
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 100%;
+        margin-right: 0.5rem;
+        background: var(--tui-base-04);
+    }
+}
+	
+.active:before {
+  background: var(--tui-success-fill);
 }

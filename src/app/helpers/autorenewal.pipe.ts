@@ -14,7 +14,7 @@ export class IsActivePipe implements PipeTransform {
             return "Автопродление";
         }
         else {
-            return "";
+            return "Отключено";
         }
     }
 

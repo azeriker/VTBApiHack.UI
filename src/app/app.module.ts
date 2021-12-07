@@ -37,6 +37,7 @@ import { PeriodPipe } from "./helpers/period.pipe";
 import { IsActivePipe } from "./helpers/autorenewal.pipe";
 import { ProfileComponent } from './components/profile/profile.component';
 import {TuiTableModule} from "@taiga-ui/addon-table";
+import { SubscriptionPolicyPipe } from "./helpers/subscription-policy.pipe";
 
 
 
@@ -48,6 +49,7 @@ import {TuiTableModule} from "@taiga-ui/addon-table";
     AddSubscriptionDialogComponent,
     PeriodPipe,
     IsActivePipe,
+    SubscriptionPolicyPipe,
     ProfileComponent
   ],
   imports: [
