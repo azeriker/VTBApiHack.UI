@@ -1,0 +1,32 @@
+<div class="profile-wrapper">
+  <div class="profile-card">
+    <div class="buttons">
+      <button
+        tuiButton
+        type="button"
+        appearance="primary"
+      >
+        Открыть Telegram бота
+      </button>
+      <tui-input
+        tuiTextfieldSize="m"
+        [tuiTextfieldLabelOutside]="true"
+        [(ngModel)]="hashValue"
+      >
+        Введите хэш полученый в Telegram боте
+      </tui-input>
+      <button
+        tuiButton
+        type="button"
+        appearance="primary"
+      >
+        Связать
+      </button>
+    </div>
+    <div class="notifications">
+      <tui-checkbox-labeled [(ngModel)]="isTgNotificationsOn" size="m" >
+        Уведомлять в Telegram
+      </tui-checkbox-labeled>
+    </div>
+  </div>
+</div>

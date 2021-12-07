@@ -1,4 +1,11 @@
-import { Component } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+
+interface TabItem {
+  name: string;
+  link: string;
+  icon?: string;
+}
 
 @Component({
   selector: 'app-root',
@@ -6,32 +13,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  title(title: any) {
-    throw new Error('Method not implemented.');
+
+  readonly tabs: TabItem[] = [
+    { name: "Подписки", link: 'subscriptions' },
+    { name: "Профиль", link: 'profile' }
+  ]
+
+  public activeElementIndex = 0;
+
+  constructor(private _router: Router) {
+    this._router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const route = event.url.substring(1, event.url.length);
+        this.activeElementIndex = this.tabs.findIndex(x => x.link === route);
+      }
+    });
   }
-
- 
-  readonly tabs = [
-      'Мои Подписки',
-      'Выход'
-  ];
-
-  activeElement = String(this.tabs[0]);
-
-  open = false;
-
-  get activeItemIndex(): number {
-      return this.tabs.indexOf(this.activeElement);
-  }
-
-  stop(event: Event) {
-      // We need to stop tab custom event so parent component does not think its active
-      event.stopPropagation();
-  }
-
-  onClick(activeElement: string) {
-      this.activeElement = activeElement;
-      this.open = false;
-  }
-
 }
