@@ -1,29 +1,40 @@
 <div class="subscriptions_container">
+  <div class="subscriptions_header">
+    <h2>Активные подписки</h2>
+    <button tuiButton appearance="secondary" size="m" (click)="showDialog()">Добавить подписку</button>
+  </div>
 
-    <tui-marker-icon mode="link" src="tuiIconPlusLarge" class="subscriptions_add_button" (click)="showDialog()">
-    </tui-marker-icon>
-    <div *ngFor="let subscription of subscriptions">
-        <tui-accordion class="container" [rounded]="true">
-
-            <tui-accordion-item borders="top-bottom" [showArrow]="false">
-                <div class="subscription-header">
-                    <div class="subscription-title">{{subscription.name}}</div>
-                    <div class="subscription-title tui-text_body-m">{{subscription.nextCharge }}</div>
-                    <div class="subscription-title tui-text_body-m">{{subscription.period | period }}</div>
-                    <div class="subscription-info">
-                        <tui-money class="subscription-amount subscription-title" [value]="23000"></tui-money>
-                        <div class="subscription-status">{{subscription.isActive | autorenewal}}</div>
-                    </div>
-                </div>
-                <ng-template tuiAccordionItemContent>
-                    <h3 class="form-title">Подписка</h3>
-                    <button tuiButton type="button" appearance="flat" size="m">
-                        Отключить
-                    </button>
-                </ng-template>
-            </tui-accordion-item>
-
-        </tui-accordion>
-    </div>
-
+  <table tuiTable [columns]="columns" class="subscriptions_table">
+    <thead>
+    <tr tuiThGroup>
+      <th *tuiHead="'name'" tuiTh>Название</th>
+      <th *tuiHead="'date'" tuiTh>Активна до</th>
+      <th *tuiHead="'period'" tuiTh>Длительность</th>
+      <th *tuiHead="'price'" tuiTh>Цена</th>
+      <th *tuiHead="'action'" [sorter]="null" tuiTh></th>
+    </tr>
+    </thead>
+    <tbody tuiTbody [data]="subscriptions">
+    <tr *tuiRow="let sub of subscriptions; let index = index" tuiTr>
+      <td *tuiCell="'name'" tuiTd>{{sub.name}}</td>
+      <td *tuiCell="'date'" tuiTd>{{sub.nextCharge | date: "dd/MM/yy"}}</td>
+      <td *tuiCell="'period'" tuiTd>{{sub.period | period }}</td>
+      <td *tuiCell="'price'" tuiTd>
+        <div class="subscription-info">
+          <tui-money class="subscription-amount subscription-title" [value]="sub.price"></tui-money>
+          <div class="subscription-status">{{sub.isActive | autorenewal}}</div>
+        </div>
+      </td>
+      <td *tuiCell="'action'" class="actions" tuiTd>
+        <button
+          tuiButton
+          title="Отписаться"
+          class="remove"
+          type="button"
+          appearance="secondary"
+        >Отписаться</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>

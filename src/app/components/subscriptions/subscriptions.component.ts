@@ -14,6 +14,8 @@ import { Subscription } from 'src/app/models/subscription';
 })
 export class SubscriptionsComponent {
 
+  public readonly columns = ['name', 'date', 'period', 'price', 'action'];
+
   private readonly dialog = this.dialogService.open<number>(
     new PolymorpheusComponent(AddSubscriptionDialogComponent, this.injector),
     {

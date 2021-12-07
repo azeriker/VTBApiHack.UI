@@ -36,6 +36,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { PeriodPipe } from "./helpers/period.pipe";
 import { IsActivePipe } from "./helpers/autorenewal.pipe";
 import { ProfileComponent } from './components/profile/profile.component';
+import {TuiTableModule} from "@taiga-ui/addon-table";
 
 
 
@@ -78,7 +79,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     TuiCurrencyPipeModule,
     TuiTextfieldControllerModule,
     TuiCheckboxLabeledModule,
-    TuiModeModule
+    TuiModeModule,
+    TuiTableModule
 
 
   ],
