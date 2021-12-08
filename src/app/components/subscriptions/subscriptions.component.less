@@ -1,97 +1,138 @@
 @import '~@taiga-ui/core/styles/taiga-ui-local';
-
-.subscriptions {
-  &_container {
+.container {
+    max-width: 60rem;
+    width: 60rem;
+}
+.subscription-header {
+    font: var(--tui-font-text-l);
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: start;
+}
+.subscription-date {
+    font: var(--tui-font-text-xl);
+    text-align: center;
+}
+.subscription-date,
+.subscription-info {
+    color: var(--tui-text-02);
+}
+.subscription-month,
+.subscription-status {
+    font: var(--tui-font-text-s);
+}
+.subscription-pic {
+    display: flex;
     align-items: center;
-    padding: 50px;
-  }
-  &_header {
+    justify-content: center;
+    flex-shrink: 0;
+    margin: 0 1.5rem;
+    background: var(--tui-secondary-active);
+    border-radius: 100%;
+    width: 3rem;
+    height: 3rem;
+    color: var(--tui-text-03);
+}
+.subscription-title {
+    .text-overflow();
+    flex-grow: 1;
+    text-align: center;
+    width: 0.5rem;
+    max-width: 200px;
+}
+.subscription-info {
+    text-align: right;
+    width: 0.5rem;
+    flex-grow: 1;
+}
+.subscription-status {
+    &_success {
+        color: var(--tui-success-fill);
+    }
+    &_error {
+        color: var(--tui-error-fill);
+    }
+}
+.form-title {
+    font: var(--tui-font-heading-6);
+    margin: 0 0 1.25rem;
+}
+.input {
+    max-width: 28.75rem;
+    margin-bottom: 1.25rem;
+}
+.buttons {
+    display: flex;
+}
+.subscriptions_container{
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.subscriptions_add_button{
+    margin-top: 1rem;
+    align-self: flex-end;
+    margin-right: 25rem;
+}
+
+
+.header {
+    display: flex;
     width: 100%;
-    padding: 0 20px 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    height: 12.5rem;
     align-items: center;
-  }
+    justify-content: center;
+    background: #ffdd2d;
 }
 
-td,
-th {
-  min-width: 150px;
-  width: 17%;
-  max-width: 400px;
-  white-space: nowrap;
-  border-color: transparent;
-  text-align: center;
-  &:last-child {
-    border: none;
-  }
-}
-
-th {
-  height: 110px;
-}
-
-tr {
-  height: 80px;
-}
-
-/deep/.actions button {
-  width: 130px;
-  height: 30px !important;
-  & tui-wrapper {
-    background-color: #d07777;
-    color: white;
-    &:hover {
-      background-color: #af5757;
-      color: white;
-    }
-  }
-}
-
-
-th {
-  /deep/ button.sort {
-    margin-right: auto;
-    margin-left: auto;
-    padding-left: 24px;
-  }
-}
-
-tbody {
-  border-color: transparent;
-}
-
-
-.actions {
-  .transition(opacity);
-  opacity: 0;
-
-  tr:hover &,
-  tr:focus-within & {
-    opacity: 1;
-  }
-}
-	
-.active,
-.disabled {
+.buttons {
     display: flex;
-    align-items: center;
-    text-transform: capitalize;
- 
-    &:before {
-        content: '';
-        width: 0.5rem;
-        height: 0.5rem;
-        border-radius: 100%;
-        margin-right: 0.5rem;
-        background: var(--tui-base-04);
+    justify-content: center;
+    margin-top: 1.5rem;
+
+    @media @mobile-m {
+        flex-direction: column;
     }
-}
+} 
 	
-.active:before {
-  background: var(--tui-success-fill);
+.box {
+  width: 60rem;
+  height: 20rem;
+}
+
+.content {
+  padding: 0 0.6875rem;
+}
+
+.subscriptions_header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px 50px;
+}
+.money{
+  color:var(--tui-link);
+}
+.policy{
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: row;
+}
+.policy_item{
+padding: 1rem;
+}
+.activeButton{
+  background-color: white;
+  color:yellowgreen;
+}
+.saveButton{
+  margin-top:1rem;
+}
+.accord_container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

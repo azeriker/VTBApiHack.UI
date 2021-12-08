@@ -7,7 +7,8 @@ import { distinctUntilChanged } from 'rxjs';
 import { Period, Policy, Subscription } from 'src/app/models/subscription';
 import { Tariff } from 'src/app/models/tariff';
 import { HttpService } from 'src/app/services/http.service';
-
+import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { CredentialsDialogComponent } from '../credentials-dialog/credentials-dialog.component';
 
 @Component({
   selector: 'app-add-subscription-dialog',
@@ -22,7 +23,7 @@ export class AddSubscriptionDialogComponent implements OnInit {
   createSubscriptionForm: FormGroup;
   _data: any
 
-  
+
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     @Inject(Injector) private readonly injector: Injector,
@@ -79,7 +80,7 @@ export class AddSubscriptionDialogComponent implements OnInit {
       tariff: tariff
     });
   }
-  
+
   createSubscription() {
     const newSubscription = new Subscription(this.createSubscriptionForm.get("name")?.value, this.createSubscriptionForm.get("period")?.value, this.createSubscriptionForm.get("price")?.value, this.createSubscriptionForm.get("policy")?.value);
     this.httpService.createSubscription(newSubscription).subscribe(
@@ -90,25 +91,53 @@ export class AddSubscriptionDialogComponent implements OnInit {
     this.context.completeWith(true);
   }
 
-    showPreCredentialDialog(credentials: any) {
-      this.dialogService
-        .open('Приготовьтесь к вводу данных карты на целевом сайте', { label: 'Уведомление', size: 's', closeable: false, dismissible: false })
-        .subscribe({complete: () => {
+  // showPreCredentialDialog(credentials: any) {
+  //   this.dialogService
+  //     .open('Приготовьтесь к вводу данных карты на целевом сайте', 
+  //     { data: {}, label: 'Уведомление', size: 's', closeable: false, dismissible: false })
+  //     .subscribe({complete: () => {
+  //       this.httpService.getCredentials(credentials.xMdmId, credentials.publicId).subscribe(
+  //         (data: any) => {
+  //           data.encryptedPan = (atob(data.encryptedPan));
+  //           this.dialogService.open("Номер карты:"+  data.encryptedPan + "\n" + "Срок действия:" + data.cardExpiry + "\n" + "Имя владельца:" + data.embossingName, { closeable: false, dismissible: false })
+  //           .subscribe(
+  //               {complete: () => {
+  //                 this.httpService.getCVV(credentials.xMdmId, credentials.publicId).subscribe(
+  //                   (data: any) => {
+  //                     this.dialogService.open("CVV:"+ data.cvv, { label: 'Уведомление', size: 's', closeable: false, dismissible: false } ).subscribe();
+  //                   }
+  //                 );
+  //               }});
+
+  //             }
+  //           );
+  //     }});};
+
+  showPreCredentialDialog(credentials: any) {
+    this.dialogService
+      .open('Приготовьтесь к вводу данных карты на целевом сайте',
+        { data: {}, label: 'Уведомление', size: 's', closeable: false, dismissible: false })
+      .subscribe({
+        complete: () => {
           this.httpService.getCredentials(credentials.xMdmId, credentials.publicId).subscribe(
             (data: any) => {
               data.encryptedPan = (atob(data.encryptedPan));
-              this.dialogService.open("Номер карты:"+  data.encryptedPan + "\n" + "Срок действия:" + data.cardExpiry + "\n" + "Имя владельца:" + data.embossingName, { closeable: false, dismissible: false })
-              .subscribe(
-                  {complete: () => {
-                    this.httpService.getCVV(credentials.xMdmId, credentials.publicId).subscribe(
-                      (data: any) => {
-                        this.dialogService.open("CVV:"+ data.cvv, { label: 'Уведомление', size: 's', closeable: false, dismissible: false } ).subscribe();
-                      }
-                    );
-                  }});
-                
+              this.httpService.getCVV(credentials.xMdmId, credentials.publicId).subscribe(
+
+                (data2: any) => {
+                  this.dialogService.open<number>(
+                    new PolymorpheusComponent(CredentialsDialogComponent, this.injector),
+                    {
+                      data: { "encryptedPan": data.encryptedPan, "cardExpiry": data.cardExpiry, "embossingName": data.embossingName, "cvv": data2.cvv },
+                      dismissible: true,
+                    },
+                  ).subscribe();
                 }
               );
-        }});};
+            }
+          );
+        }
+      });
+  };
 
-  }
+}

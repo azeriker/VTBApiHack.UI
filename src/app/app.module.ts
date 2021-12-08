@@ -8,7 +8,7 @@ import {
   TuiSvgModule,
   TuiButtonModule,
   TuiPrimitiveCheckboxModule,
-  TuiTextfieldControllerModule, TuiModeModule
+  TuiTextfieldControllerModule, TuiModeModule, TuiNotificationModule, TuiPrimitiveTextfieldModule, TuiScrollbarModule
 } from "@taiga-ui/core";
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,6 +19,7 @@ import {
   TuiCheckboxLabeledModule,
   TuiCheckboxModule,
   TuiDataListWrapperModule,
+  TuiInputCopyModule,
   TuiInputModule,
   TuiInputNumberModule,
   TuiIslandModule,
@@ -27,7 +28,7 @@ import {
   TuiTabsModule
 } from "@taiga-ui/kit";
 import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
-import { TuiCurrencyPipeModule, TuiMoneyModule } from "@taiga-ui/addon-commerce";
+import { TuiCardModule, TuiCurrencyPipeModule, TuiInputCardModule, TuiInputCVCModule, TuiInputExpireModule, TuiMoneyModule } from "@taiga-ui/addon-commerce";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AddSubscriptionDialogComponent } from './components/add-subscription-dialog/add-subscription-dialog.component';
 import { MatDialogModule } from "@angular/material/dialog";
@@ -38,6 +39,9 @@ import { IsActivePipe } from "./helpers/autorenewal.pipe";
 import { ProfileComponent } from './components/profile/profile.component';
 import {TuiTableModule} from "@taiga-ui/addon-table";
 import { SubscriptionPolicyPipe } from "./helpers/subscription-policy.pipe";
+import { CredentialsDialogComponent } from './components/credentials-dialog/credentials-dialog.component';
+import { ClipboardModule } from "@angular/cdk/clipboard";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 
 
@@ -50,7 +54,8 @@ import { SubscriptionPolicyPipe } from "./helpers/subscription-policy.pipe";
     PeriodPipe,
     IsActivePipe,
     SubscriptionPolicyPipe,
-    ProfileComponent
+    ProfileComponent,
+    CredentialsDialogComponent
   ],
   imports: [
     HttpClientModule,
@@ -82,7 +87,17 @@ import { SubscriptionPolicyPipe } from "./helpers/subscription-policy.pipe";
     TuiTextfieldControllerModule,
     TuiCheckboxLabeledModule,
     TuiModeModule,
-    TuiTableModule
+    TuiTableModule,
+    TuiCardModule,
+    TuiInputCardModule,
+    TuiInputExpireModule,
+    TuiInputCVCModule,
+    TuiInputCopyModule,
+    ClipboardModule,
+    TuiNotificationModule,
+    MatSnackBarModule,
+    TuiPrimitiveTextfieldModule,
+    TuiScrollbarModule
 
 
   ],

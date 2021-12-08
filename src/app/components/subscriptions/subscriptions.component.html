@@ -1,37 +1,86 @@
-<div class="subscriptions_container" >
+<div class="subscriptions_container">
   <div class="subscriptions_header">
-    <h2>Активные подписки</h2>
+    <h2>Мои подписки</h2>
     <button tuiButton appearance="secondary" size="m" (click)="showDialog()">Добавить подписку</button>
   </div>
-
-  <table tuiTable [columns]="columns" class="subscriptions_table">
-    <thead>
-      <tr tuiThGroup>
-        <th *tuiHead="'name'" tuiTh>Название</th>
-        <th *tuiHead="'date'" tuiTh>Активна до</th>
-        <th *tuiHead="'period'" tuiTh>Длительность</th>
-        <th *tuiHead="'price'" tuiTh>Цена</th>
-        <th *tuiHead="'status'" tuiTh>Статус</th>
-        <th *tuiHead="'action'" [sorter]="null" tuiTh>Управление</th>
-      </tr>
-    </thead>
-    <tbody tuiTbody [data]="subscriptions">
-      <tr *tuiRow="let sub of subscriptions; let index = index" tuiTr>
-        <td *tuiCell="'name'" tuiTd>{{sub.name}}</td>
-        <td *tuiCell="'date'" tuiTd>{{sub.nextCharge | date: "dd/MM/yy"}}</td>
-        <td *tuiCell="'period'" tuiTd>{{sub.period | period }}</td>
-        <td *tuiCell="'price'" tuiTd>
-          <div class="subscription-info">
-            <tui-money class="subscription-amount subscription-title" [value]="sub.price"></tui-money>
+  <tui-scrollbar class="box" *ngIf="subscriptions.length > 0">
+    <div *ngFor="let subscription of subscriptions">
+      <tui-accordion class="container" [rounded]="true" [closeOthers]="true">
+        <tui-accordion-item borders="top-bottom" [showArrow]="false" [disabled]="isActive(subscription?.isActive)">
+          <div class="subscription-header">
+            <div class="subscription-title">{{subscription.name}}</div>
+            <div class="subscription-title tui-text_body-m">{{subscription.nextCharge | date: "dd/MM/yy" }}</div>
+            <div class="subscription-title tui-text_body-m">{{subscription.period | period }}</div>
+            <div class="subscription-title tui-text_body-m">{{subscription.policy | policy }}</div>
+            <div class="subscription-info">
+              <tui-money class="subscription-amount subscription-title"
+                [class.money]="!isActive(subscription?.isActive)" [value]="subscription.price"></tui-money>
+              <div class="subscription-status">{{subscription.isActive | autorenewal}}</div>
+            </div>
           </div>
-        </td>
-        <td *tuiCell="'status'" tuiTd>
-          <div class="disabled" [class.active]="sub.isActive">{{sub.isActive | autorenewal}}</div>
-        </td>
-        <td *tuiCell="'action'" tuiTd>
-          <button *ngIf="sub.isActive"  tuiButton title="Отписаться" class="remove actions" type="button" appearance="secondary" (click)="disableSubscription(sub.id || '')">Отписаться</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <ng-template tuiAccordionItemContent>
+            <h3 class="form-title">Подписка</h3>
+            <div class="accord_container">
+              <div style="flex-grow: 1; max-width: 300px;">
+            <tui-select formControlName="policy" itemSize="l" [valueContent]="policyContent">
+              Изменить политику
+              <tui-data-list-wrapper *tuiDataList [items]="policies" [itemContent]="policyContent">
+              </tui-data-list-wrapper>
+          </tui-select>
+          <ng-template #policyContent let-policy>
+
+              <div>
+                  {{ policy | policy}}
+              </div>
+
+          </ng-template>
+          <div class="button_container saveButton">
+            <button tuiButton type="button" appearance="primary" size="m" (click)="save(subscription.id || '')">
+                Сохранить
+            </button>
+          </div>
+        </div>
+          <div>
+            <button tuiButton type="button" appearance="outline" size="m" (click)="disableSubscription(subscription.id || '')">
+              Отменить подписку
+          </button>
+         
+          </div>
+        </div>
+          </ng-template>
+        </tui-accordion-item>
+
+      </tui-accordion>
+    </div>
+  </tui-scrollbar>
 </div>
+<!-- <table tuiTable [columns]="columns" class="subscriptions_table">
+  <thead>
+    <tr tuiThGroup>
+      <th *tuiHead="'name'" tuiTh>Название</th>
+      <th *tuiHead="'date'" tuiTh>Активна до</th>
+      <th *tuiHead="'period'" tuiTh>Длительность</th>
+      <th *tuiHead="'price'" tuiTh>Цена</th>
+      <th *tuiHead="'status'" tuiTh>Статус</th>
+      <th *tuiHead="'action'" [sorter]="null" tuiTh>Управление</th>
+    </tr>
+  </thead>
+  <tbody tuiTbody [data]="subscriptions">
+    <tr *tuiRow="let sub of subscriptions; let index = index" tuiTr>
+      <td *tuiCell="'name'" tuiTd>{{sub.name}}</td>
+      <td *tuiCell="'date'" tuiTd>{{sub.nextCharge | date: "dd/MM/yy"}}</td>
+      <td *tuiCell="'period'" tuiTd>{{sub.period | period }}</td>
+      <td *tuiCell="'price'" tuiTd>
+        <div class="subscription-info">
+          <tui-money class="subscription-amount subscription-title" [value]="sub.price"></tui-money>
+        </div>
+      </td>
+      <td *tuiCell="'status'" tuiTd>
+        <div class="disabled" [class.active]="sub.isActive">{{sub.isActive | autorenewal}}</div>
+      </td>
+      <td *tuiCell="'action'" tuiTd>
+        <button *ngIf="sub.isActive"  tuiButton title="Отписаться" class="remove actions" type="button" appearance="secondary" (click)="disableSubscription(sub.id || '')">Отписаться</button>
+      </td>
+    </tr>
+  </tbody>
+</table> -->

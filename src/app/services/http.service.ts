@@ -1,4 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { StringMap } from "@angular/compiler/src/compiler_facade_interface";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
@@ -35,5 +36,9 @@ export class HttpService {
     let headers = new HttpHeaders();
     headers = headers.set('X-Mdm-Id', xMdmId);
     return this.http.get<string>(this.credentialsApiUrl + "openapi/rb/dks/cardinfo/hackathon/v1/cvv/" + publicId,  {headers: headers});
+  }
+  public changePolicy(publicId: string, policy: string): Observable<string> {
+
+    return this.http.put<string>(this.apiUrl + "Subscription/ChangePolicy",  {"publicId": publicId, "policy": policy});
   }
 }
