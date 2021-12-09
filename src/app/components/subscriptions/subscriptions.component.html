@@ -5,7 +5,7 @@
   </div>
   <tui-scrollbar class="box" *ngIf="subscriptions.length > 0">
     <div *ngFor="let subscription of subscriptions">
-      <tui-accordion class="container" [rounded]="true" [closeOthers]="true">
+      <tui-accordion class="container" [ngClass]="{'card-style': isExperimentalOn}" [rounded]="true" [closeOthers]="true">
         <tui-accordion-item borders="top-bottom" [showArrow]="false" [disabled]="isActive(subscription?.isActive)">
           <div class="subscription-header">
             <div class="subscription-title">{{subscription.name}}</div>
@@ -44,7 +44,7 @@
             <button tuiButton type="button" appearance="outline" size="m" (click)="disableSubscription(subscription.id || '')">
               Отменить подписку
           </button>
-         
+
           </div>
         </div>
           </ng-template>

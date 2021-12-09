@@ -16,6 +16,7 @@ import { Tariff } from 'src/app/models/tariff';
 export class SubscriptionsComponent {
 
   public readonly columns = ['name', 'date', 'period', 'price', 'status', 'action'];
+  public isExperimentalOn = true;
 
   private readonly dialog = this.dialogService.open<number>(
     new PolymorpheusComponent(AddSubscriptionDialogComponent, this.injector),
@@ -41,7 +42,7 @@ export class SubscriptionsComponent {
       ((data: Subscription[]) => {
         this.subscriptions = data;
       }));
-     
+
       this.policies.push(Policy.Always);
       this.policies.push(Policy.InactivityAsProlongation);
       this.policies.push(Policy.InactivityAsCancel);
@@ -63,8 +64,8 @@ export class SubscriptionsComponent {
     this.httpService.disableSubscription(subscriptionId).subscribe(
       (data: string) => {
         this.httpService.getSubscriptions().subscribe(
-    
-      
+
+
     );
     this.httpService.getSubscriptions().subscribe(
       ((data: Subscription[]) => {

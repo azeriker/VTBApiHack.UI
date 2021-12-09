@@ -1,13 +1,16 @@
 @import '~@taiga-ui/core/styles/taiga-ui-local';
-.container {
-    max-width: 60rem;
-    width: 60rem;
-}
+//.container {
+//    max-width: 60rem;
+//    width: 60rem;
+//}
 .subscription-header {
     font: var(--tui-font-text-l);
     display: flex;
     align-items: center;
     justify-content: start;
+  //& > div {
+  //  width: 20%;
+  //}
 }
 .subscription-date {
     font: var(--tui-font-text-xl);
@@ -37,13 +40,11 @@
     .text-overflow();
     flex-grow: 1;
     text-align: center;
-    width: 0.5rem;
-    max-width: 200px;
+    width: 20%;
 }
 .subscription-info {
+    width: 20%;
     text-align: right;
-    width: 0.5rem;
-    flex-grow: 1;
 }
 .subscription-status {
     &_success {
@@ -65,11 +66,13 @@
     display: flex;
 }
 .subscriptions_container{
-
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
 }
 .subscriptions_add_button{
     margin-top: 1rem;
@@ -87,6 +90,12 @@
     background: #ffdd2d;
 }
 
+// max - 1500 or 1200
+
+.card-style {
+
+}
+
 .buttons {
     display: flex;
     justify-content: center;
@@ -95,10 +104,10 @@
     @media @mobile-m {
         flex-direction: column;
     }
-} 
-	
+}
+
 .box {
-  width: 60rem;
+  width: 100%;
   height: 20rem;
 }
 
