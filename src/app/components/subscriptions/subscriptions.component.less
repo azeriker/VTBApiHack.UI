@@ -65,7 +65,7 @@
 .buttons {
     display: flex;
 }
-.subscriptions_container{
+.subscriptions_container {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -73,6 +73,7 @@
     max-width: 1200px;
     margin-right: auto;
     margin-left: auto;
+    height: 100%;
 }
 .subscriptions_add_button{
     margin-top: 1rem;
@@ -108,8 +109,11 @@
 
 .box {
   width: 100%;
-  height: 20rem;
+  height: calc(100% - 98);
+  //box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 30px;
 }
+
 
 .content {
   padding: 0 0.6875rem;
@@ -144,4 +148,29 @@ padding: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.card-style {
+  border: 2px rgba(82, 110, 211, 0.5) solid;
+  border-radius: 30px;
+  margin-bottom: 35px;
+  .subscription-header {
+    height: 90px;
+  }
+
+  /deep/ .wrapper {
+    border-radius: 30px;
+    & > .content {
+      border-top: 1px lightslategray solid;
+    }
+  }
+  /deep/ .header {
+    border: none;
+    background: none !important;
+  }
+  tui-expand::after {
+    border-radius: 30px;
+    border-width: 2px;
+    background: red !important;
+  }
 }
