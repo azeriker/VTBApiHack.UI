@@ -1,7 +1,9 @@
 <div class="profile-wrapper">
   <div class="profile-card">
+    <h1 class="user-greeting" *ngIf="userName">
+      Здравсвуйте, {{userName}}
+    </h1>
     <div class="buttons">
-
       <a tuiButton
          type="button"
          appearance="primary"
@@ -27,10 +29,8 @@
         Связать
       </button>
     </div>
-    <div class="notifications">
-      <tui-checkbox-labeled [disabled]="isNotificationsCheckboxDisabled" [(ngModel)]="isTgNotificationsOn" size="m" >
-        Уведомлять в Telegram
-      </tui-checkbox-labeled>
+    <div class="logout">
+      <button size="l" tuiButton appearance="secondary" (click)="logout()">Выйти</button>
     </div>
   </div>
 </div>

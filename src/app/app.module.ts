@@ -42,6 +42,8 @@ import { SubscriptionPolicyPipe } from "./helpers/subscription-policy.pipe";
 import { CredentialsDialogComponent } from './components/credentials-dialog/credentials-dialog.component';
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import {OAuthModule} from "angular-oauth2-oidc";
+import {AuthGuard} from "./oauth/auth.guard";
 
 
 
@@ -97,11 +99,10 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     TuiNotificationModule,
     MatSnackBarModule,
     TuiPrimitiveTextfieldModule,
-    TuiScrollbarModule
-
-
+    TuiScrollbarModule,
+    OAuthModule.forRoot()
   ],
-  providers: [HttpService, {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}],
+  providers: [HttpService, {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

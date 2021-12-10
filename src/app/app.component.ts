@@ -1,5 +1,7 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {Component} from '@angular/core';
+import {NavigationEnd, Router} from "@angular/router";
+import {OAuthService} from "angular-oauth2-oidc";
+import {authCodeFlowConfig} from "./oauth/oauth.config";
 
 interface TabItem {
   name: string;
@@ -21,7 +23,14 @@ export class AppComponent {
 
   public activeElementIndex = 0;
 
-  constructor(private _router: Router) {
+  constructor(private _router: Router, private _oauthService: OAuthService) {
+    _oauthService.configure(authCodeFlowConfig);
+    _oauthService.loadDiscoveryDocumentAndTryLogin().then(res => {
+      const isLoggedIn = _oauthService.hasValidAccessToken();
+      if (!isLoggedIn) {
+        this._oauthService.initLoginFlow();
+      }
+    });
     this._router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const route = event.url.substring(1, event.url.length);
