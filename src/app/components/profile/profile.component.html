@@ -1,13 +1,15 @@
 <div class="profile-wrapper">
   <div class="profile-card">
     <div class="buttons">
-      <button
-        tuiButton
-        type="button"
-        appearance="primary"
+
+      <a tuiButton
+         type="button"
+         appearance="primary"
+         [href]="'https://t.me/vtbapihack_bot'"
+         target="_blank"
       >
         Открыть Telegram бота
-      </button>
+      </a>
       <tui-input
         tuiTextfieldSize="m"
         [tuiTextfieldLabelOutside]="true"
@@ -19,12 +21,14 @@
         tuiButton
         type="button"
         appearance="primary"
+        [disabled]="!isNotificationsCheckboxDisabled"
+        (click)="linkTelegram()"
       >
         Связать
       </button>
     </div>
     <div class="notifications">
-      <tui-checkbox-labeled [(ngModel)]="isTgNotificationsOn" size="m" >
+      <tui-checkbox-labeled [disabled]="isNotificationsCheckboxDisabled" [(ngModel)]="isTgNotificationsOn" size="m" >
         Уведомлять в Telegram
       </tui-checkbox-labeled>
     </div>

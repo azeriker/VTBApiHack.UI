@@ -41,4 +41,8 @@ export class HttpService {
 
     return this.http.put<string>(this.apiUrl + "Subscription/ChangePolicy",  {"publicId": publicId, "policy": policy});
   }
+
+  public bindTg(hash: string): Observable<void> {
+    return this.http.post<void>(this.apiUrl + "User/BindTg",  {"hash": hash});
+  }
 }
