@@ -1,5 +1,6 @@
 import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import {
   TuiRootModule,
   TuiDialogModule,
@@ -45,6 +46,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import {OAuthModule} from "angular-oauth2-oidc";
 import {AuthGuard} from "./oauth/auth.guard";
 import { LogoutComponent } from './components/logout/logout.component';
+import { TokenInterceptor } from "./services/token-interceptor";
 
 
 
@@ -104,7 +106,11 @@ import { LogoutComponent } from './components/logout/logout.component';
     TuiScrollbarModule,
     OAuthModule.forRoot()
   ],
-  providers: [HttpService, {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}, AuthGuard],
+  providers: [HttpService, {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}, AuthGuard,
+    {  provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
