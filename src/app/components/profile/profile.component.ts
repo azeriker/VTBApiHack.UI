@@ -31,6 +31,11 @@ export class ProfileComponent implements OnInit {
   constructor(private _httpService: HttpService, private _oauthService: OAuthService) { }
 
   public ngOnInit(): void {
+    this._oauthService.loadUserProfile().then((res: UserOidcProfile) => {
+      this.userName = res.info?.name;
+    }, (err) => {
+      // console.log(err);
+    });
     this._oauthService.events
       .pipe(
         takeWhile(() => !this.userName)
@@ -40,7 +45,7 @@ export class ProfileComponent implements OnInit {
           this.userName = res.info?.name;
         }, (err) => {
           console.log(err);
-        } );
+        });
       });
   }
 
