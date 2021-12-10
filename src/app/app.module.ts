@@ -44,6 +44,7 @@ import { ClipboardModule } from "@angular/cdk/clipboard";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import {OAuthModule} from "angular-oauth2-oidc";
 import {AuthGuard} from "./oauth/auth.guard";
+import { LogoutComponent } from './components/logout/logout.component';
 
 
 
@@ -57,7 +58,8 @@ import {AuthGuard} from "./oauth/auth.guard";
     IsActivePipe,
     SubscriptionPolicyPipe,
     ProfileComponent,
-    CredentialsDialogComponent
+    CredentialsDialogComponent,
+    LogoutComponent
   ],
   imports: [
     HttpClientModule,

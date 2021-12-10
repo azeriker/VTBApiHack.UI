@@ -18,7 +18,8 @@ export class AppComponent {
 
   readonly tabs: TabItem[] = [
     { name: "Подписки", link: 'subscriptions' },
-    { name: "Профиль", link: 'profile' }
+    { name: "Профиль", link: 'profile' },
+    { name: "Выход", link: 'logout' },
   ]
 
   public activeElementIndex = 0;
