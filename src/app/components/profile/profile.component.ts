@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpService} from "../../services/http.service";
 import {take, takeWhile} from "rxjs";
 import {OAuthService} from "angular-oauth2-oidc";
+import { TuiDialogService } from '@taiga-ui/core';
 
 interface UserOidcProfile {
   info?: {name: string}
@@ -28,7 +29,7 @@ export class ProfileComponent implements OnInit {
 
   private _isNotificationsCheckboxDisabled = localStorage.getItem('connected') === "true";
 
-  constructor(private _httpService: HttpService, private _oauthService: OAuthService) { }
+  constructor(private _httpService: HttpService, private _oauthService: OAuthService, private readonly dialogService: TuiDialogService) { }
 
   public ngOnInit(): void {
     this._oauthService.loadUserProfile().then((res: UserOidcProfile) => {
@@ -52,7 +53,8 @@ export class ProfileComponent implements OnInit {
   public linkTelegram(): void {
     this._httpService.bindTg(this.hashValue).pipe(take(1)).subscribe(
       () => {
-        this.isNotificationsCheckboxDisabled = false;
+        this.dialogService
+          .open('Успешно связано', { data: {}, label: 'Уведомление', size: 's', closeable: true, dismissible: true }).subscribe();
       },
       error => {
         console.log('tg bind err');

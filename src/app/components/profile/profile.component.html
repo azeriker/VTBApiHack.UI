@@ -1,7 +1,7 @@
 <div class="profile-wrapper">
   <div class="profile-card">
     <h1 class="user-greeting" *ngIf="userName">
-      Здравсвуйте, {{userName}}
+      Здравствуйте, {{userName}}
     </h1>
     <div class="buttons">
       <a tuiButton
@@ -23,7 +23,6 @@
         tuiButton
         type="button"
         appearance="primary"
-        [disabled]="!isNotificationsCheckboxDisabled"
         (click)="linkTelegram()"
       >
         Связать
