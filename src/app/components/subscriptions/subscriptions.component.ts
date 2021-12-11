@@ -18,7 +18,7 @@ export class SubscriptionsComponent {
   public readonly columns = ['name', 'date', 'period', 'price', 'status', 'action'];
   public isExperimentalOn = true;
 
-  private readonly dialog = this.dialogService.open<number>(
+  private readonly dialog = this.dialogService.open<boolean>(
     new PolymorpheusComponent(AddSubscriptionDialogComponent, this.injector),
     {
       data: 237,
@@ -55,18 +55,16 @@ export class SubscriptionsComponent {
         console.log('Dialog emitted data = ' + data);
       },
       complete: () => {
-        console.log('Dialog closed');
-      },
-    });
-  }
+        this.httpService.getSubscriptions().subscribe(
+          ((data: Subscription[]) => {
+            this.subscriptions = data;
+          }));
+  }})}
 
   disableSubscription(subscriptionId: string) {
     this.httpService.disableSubscription(subscriptionId).subscribe(
       (data: string) => {
-        this.httpService.getSubscriptions().subscribe(
-
-
-    );
+       
     this.httpService.getSubscriptions().subscribe(
       ((data: Subscription[]) => {
         this.subscriptions = data;
