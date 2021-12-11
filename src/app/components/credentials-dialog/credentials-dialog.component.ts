@@ -48,4 +48,8 @@ export class CredentialsDialogComponent implements OnInit {
     this.snackBar.open('Данные скопированы', 'Ок');
   }
 
+  close(): void{
+    this.context.completeWith(true);
+  }
+
 }

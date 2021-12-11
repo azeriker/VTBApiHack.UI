@@ -88,10 +88,11 @@ export class AddSubscriptionDialogComponent implements OnInit {
     this.httpService.createSubscription(newSubscription).subscribe(
       (data: any) => {
         this.showPreCredentialDialog(data);
+        this.context.completeWith(true);
       }
     );
     this.newSubscription = newSubscription;
-    this.context.completeWith(true);
+    
     
   }
 
