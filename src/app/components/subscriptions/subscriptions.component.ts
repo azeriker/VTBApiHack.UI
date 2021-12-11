@@ -38,10 +38,12 @@ export class SubscriptionsComponent {
   policyValue = new FormControl();
 
   ngOnInit(): void {
+    setTimeout(() => {
     this.httpService.getSubscriptions().subscribe(
       ((data: Subscription[]) => {
         this.subscriptions = data;
       }));
+    }, 1000);
 
       this.policies.push(Policy.Always);
       this.policies.push(Policy.InactivityAsProlongation);
